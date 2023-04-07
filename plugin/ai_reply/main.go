@@ -84,7 +84,7 @@ func init() { // 插件主体
 			// 获取语音
 			speaker, err := ttsmd.getSoundMode(ctx)
 			if err != nil {
-				ctx.SendChain(message.Text("ERROR: ", err))
+				ctx.SendChain(message.Text("ERROR", regexp.MustCompile(`\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`).ReplaceAllString(err.Error(), "xxx.xxx.xxx.xxx")))
 				return
 			}
 			rec, err := speaker.Speak(ctx.Event.UserID, func() string {
