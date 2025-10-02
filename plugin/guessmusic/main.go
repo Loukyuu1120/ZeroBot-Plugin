@@ -26,6 +26,10 @@ import (
 
 const serviceErr = "[guessmusic]error:"
 
+type Config struct {
+    Defaultmap map[int64]string
+}
+
 var (
 	// 用户数据
 	cfg config
@@ -452,10 +456,7 @@ func init() {
 				ctx.SendChain(message.Text("歌单名称错误，可以发送“歌单列表”获取歌单名称"))
 				return
 			}
-			cfg.Defaultlist = append(cfg.Defaultlist, dlist{
-				GroupID: gid,
-				Name:    option,
-			})
+			cfg.Defaultmap[gid] = option
 			err = saveConfig(cfgFile)
 			if err == nil {
 				ctx.SendChain(message.Text("成功！"))
